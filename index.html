@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Amigo Secreto</title>
+  <!-- Tipografías opcionales -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Merriweather:ital,wght@1,900&display=swap" rel="stylesheet">
+  <style>
+:root {
+    --color-primary: #4B69FD;
+    --color-secondary: #FFF9EB;
+    --color-tertiary: #C4C4C4;
+    --color-button: #fe652b;
+    --color-button-hover: #e55720;
+    --color-text: #444444;
+    --color-white: #FFFFFF;
+}
+
+/* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    background-color: var(--color-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+/* Banner */
+.header-banner {
+    flex: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0 0;
+}
+
+/* Sección de entrada */
+.input-section {
+    flex: 60%;
+    background-color: var(--color-secondary);
+    border: 1px solid #000;
+    border-radius: 64px 64px 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+}
+
+/* Títulos */
+.main-title {
+    font-size: 48px;
+    font-family: "Merriweather", serif;
+    font-weight: 900;
+    font-style: italic;
+    color: var(--color-white);
+}
+
+.section-title {
+    font-family: "Inter", serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin: 10px 0;
+    text-align: center;
+}
+
+/* Contenedores de entrada y botón */
+.input-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 720px;
+    margin-top: 20px;
+}
+
+.input-name {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #000;
+    border-radius: 25px 0 0 25px;
+    font-size: 16px;
+}
+
+.button-container {
+    width: 300px;
+    justify-content: center;
+}
+
+/* Estilos de entrada de texto */
+.input-title {
+    flex: 1;
+    padding: 14px 16px;
+    font-size: 18px;
+    border: 2px solid #333;
+    border-right: none;
+    border-radius: 25px 0 0 25px;
+    font-family: "Merriweather", serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilos de botón */
+button {
+    padding: 15px 22px;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    border: 2px solid #000;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+.button-add {
+    background-color: var(--color-tertiary);
+    color: var(--color-text);
+    border-radius: 0 25px 25px 0;
+}
+
+.button-add:hover {
+    background-color: #a1a1a1;
+}
+
+/* Listas */
+ul {
+    list-style-type: none;
+    color: var(--color-text);
+    font-family: "Inter", sans-serif;
+    font-size: 18px;
+    margin: 20px 0;
+}
+
+.result-list {
+    margin-top: 15px;
+    color: #05DF05;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Botón de sortear título */
+.button-draw {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 24px;
+    color: var(--color-white);
+    background-color: var(--color-button);
+    font-size: 18px;
+}
+
+.button-draw img {
+    width: 24px;
+    height: 24px;
+}
+
+.button-draw:hover {
+    background-color: var(--color-button-hover);
+}
+
+/* Extras utilitarios */
+.container { width: min(1100px, 96vw); margin: 0 auto; }
+.stack { display: grid; gap: 14px; }
+.row { display:flex; align-items:center; gap:10px; }
+.badge { display:inline-block; padding:6px 10px; border-radius:999px; border:1px solid #000; background:#fff; font-size:12px; }
+.small { font-size: 14px; opacity:.8; }
+
+.list-item { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 14px; border:1px dashed #bbb; border-radius:14px; background:#fff; }
+.name-chip { font-weight:600; }
+.btn-icon { background:#fff; border-radius:12px; padding:8px; display:inline-grid; place-items:center; }
+.btn-secondary { background:#fff; }
+
+.hr { height:1px; background:#ddd; width:100%; margin:8px 0; }
+
+.footer-actions { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+.copy { background:#fff; }
+
+.notice { color:#b00020; font-weight:600; text-align:center; }
+  </style>
+</head>
+<body>
+  <main class="main-content">
+    <!-- Banner superior -->
+    <section class="header-banner">
+      <div class="container stack" style="align-items:center; text-align:center;">
+        <h1 class="main-title">Amigo Secreto</h1>
+        <p class="badge">Sortea parejas sin repetirse ni asignarse a sí mismos</p>
+        <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=1200&auto=format&fit=crop" alt="Imagen representativa de amigo secreto" style="width:min(520px,90vw); border-radius:24px; border:2px solid #000; box-shadow:0 10px 20px rgba(0,0,0,.25)"/>
+      </div>
+    </section>
+
+    <!-- Sección de entrada -->
+    <section class="input-section">
+      <div class="container stack">
+        <h2 class="section-title">Digite el nombre de sus amigos</h2>
+
+        <!-- Input + Añadir -->
+        <div class="input-wrapper">
+          <input id="nameInput" class="input-title" type="text" placeholder="Escribe un nombre" />
+          <button id="addBtn" class="button-add" title="Añadir">Añadir</button>
+        </div>
+
+        <!-- Lista de participantes -->
+        <div class="stack">
+          <div class="row" style="justify-content:space-between;">
+            <div><span class="badge" id="countBadge">0 participantes</span></div>
+            <div class="row">
+              <button id="importBtn" class="btn-secondary">Importar lista</button>
+              <button id="clearBtn" class="btn-secondary">Limpiar</button>
+            </div>
+          </div>
+
+          <ul id="participants"></ul>
+          <div class="hr"></div>
+        </div>
+
+        <!-- Botón Sortear -->
+        <div style="display:grid; place-items:center; margin-top:6px;">
+          <button id="drawBtn" class="button-draw" title="Sortear amigo">
+            <img src="https://cdn.jsdelivr.net/gh/tabler/tabler-icons/icons/rotate-clockwise.svg" alt="Ícono para sortear" />
+            Sortear amigo
+          </button>
+        </div>
+
+        <!-- Resultados -->
+        <div class="stack" style="margin-top:14px; width:100%;">
+          <p id="warning" class="notice" style="display:none;"></p>
+          <ul id="results" class="result-list"></ul>
+          <div class="footer-actions">
+            <button id="copyBtn" class="copy">Copiar resultados</button>
+            <button id="downloadBtn" class="copy">Descargar .txt</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // --- Estado ---
+    const state = {
+      names: []
+    };
+
+    // --- Utilidades ---
+    const $ = (sel) => document.querySelector(sel);
+    const $$ = (sel) => Array.from(document.querySelectorAll(sel));
+
+    function updateCount() {
+      const n = state.names.length;
+      $('#countBadge').textContent = `${n} ${n === 1 ? 'participante' : 'participantes'}`;
+    }
+
+    function renderList() {
+      const ul = $('#participants');
+      ul.innerHTML = '';
+      state.names.forEach((name, idx) => {
+        const li = document.createElement('li');
+        li.className = 'list-item';
+        li.innerHTML = `
+          <span class="name-chip">${escapeHtml(name)}</span>
+          <span class="row">
+            <button class="btn-icon" title="Subir" data-action="up" data-idx="${idx}">▲</button>
+            <button class="btn-icon" title="Bajar" data-action="down" data-idx="${idx}">▼</button>
+            <button class="btn-icon" title="Eliminar" data-action="remove" data-idx="${idx}">✕</button>
+          </span>
+        `;
+        ul.appendChild(li);
+      });
+      updateCount();
+    }
+
+    function escapeHtml(str){
+      return str.replace(/[&<>"]+/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[s]));
+    }
+
+    function addName(raw) {
+      const name = (raw || '').trim();
+      if (!name) return;
+      // evitar duplicados (case-insensitive)
+      const exists = state.names.some(n => n.toLowerCase() === name.toLowerCase());
+      if (exists) {
+        toast(`"${name}" ya está en la lista`);
+        return;
+      }
+      state.names.push(name);
+      renderList();
+      $('#nameInput').value = '';
+      $('#nameInput').focus();
+    }
+
+    function toast(msg){
+      const p = $('#warning');
+      p.textContent = msg;
+      p.style.display = 'block';
+      setTimeout(()=>{ p.style.display='none'; }, 2200);
+    }
+
+    // Derangement: genera una permutación sin puntos fijos (nadie se asigna a sí mismo)
+    function derangement(arr) {
+      if (arr.length < 2) return null; // no se puede con 0 o 1
+      const n = arr.length;
+      let receivers = [...arr];
+      // Mezcla inicial
+      for (let i = n - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [receivers[i], receivers[j]] = [receivers[j], receivers[i]];
+      }
+      // Arreglar puntos fijos mediante swaps
+      for (let i = 0; i < n; i++) {
+        if (arr[i] === receivers[i]) {
+          // buscar índice para intercambiar
+          let j = (i + 1) % n;
+          if (arr[j] === receivers[j]) {
+            // si el siguiente también es fijo, swap con él
+            [receivers[i], receivers[j]] = [receivers[j], receivers[i]];
+          } else {
+            // buscar cualquiera distinto
+            j = 0;
+            while (j < n && (j === i || receivers[j] === arr[i])) j++;
+            if (j === n) j = (i + 1) % n;
+            [receivers[i], receivers[j]] = [receivers[j], receivers[i]];
+          }
+        }
+      }
+      // Verificar que no queden fijos
+      for (let i = 0; i < n; i++) if (arr[i] === receivers[i]) return derangement(arr);
+      return receivers;
+    }
+
+    function draw() {
+      const names = state.names;
+      if (names.length < 2) {
+        toast('Agrega al menos 2 participantes');
+        return;
+      }
+      const receivers = derangement(names);
+      if (!receivers) {
+        toast('No fue posible sortear, intenta otra vez');
+        return;
+      }
+      const pairs = names.map((giver, i) => ({ giver, receiver: receivers[i] }));
+      showResults(pairs);
+    }
+
+    function showResults(pairs){
+      const ul = $('#results');
+      ul.innerHTML = '';
+      pairs.forEach(p => {
+        const li = document.createElement('li');
+        li.textContent = `${p.giver} → ${p.receiver}`;
+        ul.appendChild(li);
+      });
+      // Guardar para copiar/descargar
+      ul.dataset.text = pairs.map(p => `${p.giver} -> ${p.receiver}`).join('\n');
+    }
+
+    function copyResults(){
+      const txt = $('#results').dataset.text || '';
+      if (!txt) { toast('No hay resultados para copiar'); return; }
+      navigator.clipboard.writeText(txt).then(() => toast('Resultados copiados'));
+    }
+
+    function downloadResults(){
+      const txt = $('#results').dataset.text || '';
+      if (!txt) { toast('No hay resultados para descargar'); return; }
+      const blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'amigo-secreto.txt';
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function importList(){
+      const raw = prompt('Pega una lista de nombres (uno por línea):');
+      if (raw == null) return;
+      const lines = raw.split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+      if (!lines.length) return;
+      const added = [];
+      lines.forEach(add => {
+        const exists = state.names.some(n => n.toLowerCase() === add.toLowerCase());
+        if (!exists) { state.names.push(add); added.push(add); }
+      });
+      renderList();
+      if (added.length) toast(`${added.length} nombre(s) importado(s)`);
+    }
+
+    function clearAll(){
+      if (!state.names.length) return;
+      if (confirm('¿Seguro que quieres limpiar la lista?')){
+        state.names = [];
+        renderList();
+        $('#results').innerHTML = '';
+        $('#results').dataset.text = '';
+      }
+    }
+
+    // --- Eventos ---
+    $('#addBtn').addEventListener('click', () => addName($('#nameInput').value));
+    $('#nameInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') addName($('#nameInput').value);
+    });
+
+    $('#participants').addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      const idx = parseInt(btn.dataset.idx, 10);
+      const action = btn.dataset.action;
+      if (action === 'remove') {
+        state.names.splice(idx, 1);
+      } else if (action === 'up' && idx > 0) {
+        [state.names[idx-1], state.names[idx]] = [state.names[idx], state.names[idx-1]];
+      } else if (action === 'down' && idx < state.names.length - 1) {
+        [state.names[idx+1], state.names[idx]] = [state.names[idx], state.names[idx+1]];
+      }
+      renderList();
+    });
+
+    $('#drawBtn').addEventListener('click', draw);
+    $('#copyBtn').addEventListener('click', copyResults);
+    $('#downloadBtn').addEventListener('click', downloadResults);
+    $('#importBtn').addEventListener('click', importList);
+    $('#clearBtn').addEventListener('click', clearAll);
+
+    // Inicial
+    renderList();
+  </script>
+</body>
+</html>
